@@ -7,8 +7,8 @@ resource "kubernetes_service" "nginx" {
       App = kubernetes_deployment.nginx.spec.0.template.0.metadata[0].labels.App
     }
     port {
-      port        = 79
-      target_port = 79
+      port        = 3000
+      target_port = 3000
     }
 
     type = "LoadBalancer"
