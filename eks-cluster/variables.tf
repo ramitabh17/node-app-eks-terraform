@@ -1,4 +1,4 @@
-variable "aws_region" {
+variable "region" {
   description = "AWS region you want the cluster to be in"
   type        = string
 }
