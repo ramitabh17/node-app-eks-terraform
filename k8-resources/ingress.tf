@@ -10,7 +10,7 @@ resource "kubernetes_ingress" "example" {
     rule {
       http {
         path {
-          path = "/*"
+          path = "/"
           backend {
             service_name = kubernetes_service.example.metadata.0.name
             service_port = 3000
