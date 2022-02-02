@@ -27,6 +27,35 @@ module "eks" {
       asg_desired_capacity          = 1
     },
   ]
+
+  workers_additional_policies = [aws_iam_policy.worker_policy.arn]
+}
+
+resource "aws_iam_policy" "worker_policy" {
+  name        = "worker-policy-${local.cluster_name}"
+  description = "Worker policy for the ALB Ingress"
+
+  policy = file("iam-policy.json")
+}
+
+resource "helm_release" "ingress" {
+  name       = "ingress"
+  chart      = "aws-alb-ingress-controller"
+  repository = "https://charts.helm.sh/incubator"
+  
+
+  set {
+    name  = "autoDiscoverAwsRegion"
+    value = "true"
+  }
+  set {
+    name  = "autoDiscoverAwsVpcID"
+    value = "true"
+  }
+  set {
+    name  = "clusterName"
+    value = local.cluster_name
+  }
 }
 
 data "aws_eks_cluster" "cluster" {
