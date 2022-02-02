@@ -3,7 +3,8 @@ resource "kubernetes_ingress" "example" {
   metadata {
     name = "example"
     annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "kubernetes.io/ingress.class" = "alb"
     }
   }
   spec {
