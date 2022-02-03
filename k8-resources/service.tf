@@ -21,11 +21,14 @@
 
 resource "kubernetes_service" "example" {
   metadata {
-    name = "ingress-service"
+    name = "nginx-example"
   }
   spec {
+    selector = {
+      App = kubernetes_deployment.nginx.spec.0.template.0.metadata[0].labels.App
+    }
     port {
-      port = 3000
+      port = 80
       target_port = 3000
       protocol = "TCP"
     }
